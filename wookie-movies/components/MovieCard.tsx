@@ -9,6 +9,7 @@ export default function MovieCard(props: MovieCardProps) {
   return (
     <div className="relative min-w-[300px] min-h-[45px]">
       <Image
+        className="brightness-[70%]"
         style={{ objectFit: "cover" }}
         unoptimized={true}
         src={props.movie.backdrop}
