@@ -1,12 +1,10 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-type TopBarProps = {
-  setSearchTerm: any;
-};
-
-export default function TopBar(props: TopBarProps) {
+export default function TopBar() {
   const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
 
   const handleChange = (e: any) => {
     e.preventDefault();
@@ -14,21 +12,26 @@ export default function TopBar(props: TopBarProps) {
   };
 
   const handleClick = () => {
-    props.setSearchTerm(searchTerm);
+    if (!searchTerm) return router.push(`/`);
+    router.push(`/?search=${searchTerm}`);
   };
 
-  const handleKeyDown = (e: any) => {
-    //Enter key
+  const handleOnKeyDown = (e: any) => {
     if (e.keyCode == 13) {
-      props.setSearchTerm(searchTerm);
+      handleClick();
     }
   };
 
   return (
-    <div className="h-24 border-b-4 px-4 py-3 border-secondary flex justify-between">
-      <div className="tracking-widest text-3xl flex justify-center items-center ">
+    <div className="h-28 border-b-4 px-4 py-3 border-secondary flex justify-between">
+      <button
+        onClick={() => {
+          router.push("/");
+        }}
+        className="tracking-widest text-3xl flex justify-center items-center"
+      >
         WOOKIE <br /> MOVIES
-      </div>
+      </button>
       <div className="flex gap-2 items-end ">
         <div>
           <div className="flex items-center gap-2 h-full">
@@ -47,7 +50,7 @@ export default function TopBar(props: TopBarProps) {
               placeholder="Search..."
               className="border-[1px] border-secondary p-3 py-1 w-64"
               onChange={handleChange}
-              onKeyDown={handleKeyDown}
+              onKeyDown={handleOnKeyDown}
             ></input>
           </div>
         </div>

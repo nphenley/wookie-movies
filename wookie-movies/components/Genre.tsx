@@ -22,7 +22,9 @@ export default function Genre(props: GenreProps) {
         <div className="font-bold">{props.genreName}</div>
         <div className="flex gap-4 pt-1">
           {moviesToDisplay &&
-            moviesToDisplay.map((movie) => <MovieCard movie={movie} />)}
+            moviesToDisplay.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
         </div>
       </div>
       <button
