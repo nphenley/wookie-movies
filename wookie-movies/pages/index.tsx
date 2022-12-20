@@ -60,7 +60,7 @@ export default function Home() {
   const resultsView = (
     <div className="px-4">
       <div className="mt-10 font-bold">Results:</div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {movies.map((movie) => (
           <div key={movie.id} className="flex justify-center mb-3">
             <MovieCard movie={movie} />
