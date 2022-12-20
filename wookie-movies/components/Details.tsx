@@ -1,6 +1,7 @@
 import { Movie } from "types/Movie";
 import Image from "next/image";
 import { FaImdb } from "react-icons/fa";
+// @ts-ignore
 import ReactStars from "react-rating-stars-component";
 
 type DetailProps = {
