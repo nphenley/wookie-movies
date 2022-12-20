@@ -45,33 +45,49 @@ export default function Home() {
   }, [searchTerm]);
 
   const loadingSpinner = (
-    <div className="flex items-center h-screen justify-center">
+    <div className="flex items-center justify-center h-screen">
       <div className="lds-dual-ring" />{" "}
     </div>
   );
 
   const noResultsView = (
-    <div className="flex flex-col p-12 justify-center items-center">
+    <div className="flex flex-col items-center justify-center p-12">
       <Image src={"/assets/noResults.png"} width={50} height={50} alt={""} />
       <div>No results</div>
     </div>
   );
 
   const resultsView = (
-    <>
-      <div className="font-bold px-4 mt-10">Results:</div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
+    <div className="px-4">
+      <div className="mt-10 font-bold">Results:</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {movies.map((movie) => (
           <div key={movie.id} className="flex justify-center mb-3">
             <MovieCard movie={movie} />
           </div>
         ))}
       </div>
-    </>
+    </div>
+  );
+
+  const fewResultsView = (
+    <div className="px-4">
+      <div className="mt-10 font-bold">Results:</div>
+      <div className="grid grid-cols-1 gap-3 sm:flex">
+        {movies.map((movie) => (
+          <div
+            key={movie.id}
+            className="flex justify-center mb-3 sm:justify-start"
+          >
+            <MovieCard movie={movie} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 
   const allGenresView = (
-    <div className="flex flex-col gap-12 mt-10 px-4">
+    <div className="flex flex-col gap-12 px-4 mt-10">
       {allGenres.map((genre) => (
         <Genre
           key={genre}
@@ -93,7 +109,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="text-secondary pb-3 text-lg min-h-screen bg-background">
+      <div className="min-h-screen pb-3 text-lg text-secondary bg-background">
         <TopBar />
         {detailView ? (
           loading ? (
@@ -107,7 +123,13 @@ export default function Home() {
               loading ? (
                 loadingSpinner
               ) : (
-                <>{movies.length ? resultsView : noResultsView}</>
+                <>
+                  {movies.length
+                    ? movies.length < 3
+                      ? fewResultsView
+                      : resultsView
+                    : noResultsView}
+                </>
               )
             ) : movies.length ? (
               allGenresView
